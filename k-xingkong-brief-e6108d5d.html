@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xingkong.com · 轻量入口与场景导航</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f5fafc;
+            color: #1b2b36;
+            line-height: 1.6;
+            padding: 0 1rem 2.5rem;
+        }
+
+        .page {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        /* 顶部导航 */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0 0.5rem;
+            border-bottom: 1px solid #d5e9ee;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.3rem;
+            letter-spacing: -0.01em;
+            color: #1d5f6b;
+        }
+
+        .logo span {
+            color: #3199a8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.6rem;
+            font-size: 0.95rem;
+            color: #3f6b76;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #1a7a8c;
+        }
+
+        /* hero 介绍区 */
+        .hero {
+            margin: 2.8rem 0 2.2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 550;
+            line-height: 1.2;
+            color: #0b3e47;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero h1 i {
+            font-style: normal;
+            background: linear-gradient(145deg, #2f909f, #1c6d7b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            max-width: 700px;
+            color: #2d5a63;
+            margin-bottom: 0.6rem;
+        }
+
+        .hero .highlight-link {
+            display: inline-block;
+            background: #e3f2f5;
+            padding: 0.4rem 1.1rem;
+            border-radius: 30px;
+            border-left: 4px solid #2f909f;
+            margin-top: 1rem;
+        }
+
+        /* 网格卡片 (三场景模块) */
+        .scene-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.4rem;
+            margin: 2.6rem 0 1.8rem;
+        }
+
+        .scene-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.6rem 1.2rem 1.8rem;
+            box-shadow: 0 4px 12px rgba(28, 109, 123, 0.06);
+            border: 1px solid #dceef2;
+            transition: transform 0.15s, box-shadow 0.2s;
+        }
+
+        .scene-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(28, 109, 123, 0.12);
+            border-color: #a8d4dd;
+        }
+
+        .scene-card .icon {
+            display: inline-block;
+            font-size: 1.8rem;
+            line-height: 1;
+            margin-bottom: 0.6rem;
+            color: #2b8c99;
+        }
+
+        .scene-card h3 {
+            font-size: 1.15rem;
+            font-weight: 550;
+            margin-bottom: 0.5rem;
+            color: #12434d;
+        }
+
+        .scene-card p {
+            font-size: 0.92rem;
+            color: #386872;
+        }
+
+        .scene-card .tag {
+            display: inline-block;
+            background: #d8edf2;
+            padding: 0.2rem 0.8rem;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            color: #1b5c68;
+            margin-top: 0.7rem;
+        }
+
+        /* 常见说明 / FAQ 摘要 */
+        .faq-section {
+            background: #edf7fa;
+            border-radius: 24px;
+            padding: 1.8rem 1.6rem;
+            margin: 2rem 0 1.4rem;
+        }
+
+        .faq-section h2 {
+            font-size: 1.3rem;
+            font-weight: 530;
+            color: #0f4f5c;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1.1rem;
+        }
+
+        .faq-item summary {
+            font-weight: 500;
+            color: #1b5f6c;
+            cursor: pointer;
+            padding: 0.3rem 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .faq-item summary::before {
+            content: "▹";
+            margin-right: 0.5rem;
+            color: #2f909f;
+        }
+
+        .faq-item p {
+            padding-left: 1.8rem;
+            color: #2c5f6a;
+            font-size: 0.92rem;
+            margin-top: 0.2rem;
+        }
+
+        .more-faq {
+            text-align: right;
+            font-size: 0.9rem;
+            margin-top: 0.2rem;
+        }
+
+        .more-faq a {
+            color: #1f7a8b;
+            text-decoration: none;
+            border-bottom: 1px dashed #7fbbc7;
+        }
+
+        .more-faq a:hover {
+            border-bottom-style: solid;
+        }
+
+        /* 内联链接段落 (自然嵌入) */
+        .inline-link-area {
+            background: white;
+            border-radius: 18px;
+            padding: 1.3rem 1.6rem;
+            border: 1px solid #d1e6ec;
+            margin: 1.4rem 0 1.2rem;
+        }
+
+        .inline-link-area p {
+            font-size: 0.96rem;
+            color: #2b5b66;
+        }
+
+        .inline-link-area a {
+            color: #147985;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #b5d6df;
+        }
+
+        .inline-link-area a:hover {
+            border-bottom-color: #147985;
+        }
+
+        /* 底部 */
+        .footer-note {
+            margin-top: 2.4rem;
+            padding-top: 1rem;
+            border-top: 1px solid #d1e4e9;
+            font-size: 0.85rem;
+            color: #58828d;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        /* 移动端 */
+        @media (max-width: 700px) {
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+
+            .scene-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .faq-section {
+                padding: 1.3rem 1rem;
+            }
+
+            .inline-link-area {
+                padding: 1rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 460px) {
+            .navbar {
+                flex-wrap: wrap;
+                gap: 0.2rem;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                gap: 0.8rem;
+                font-size: 0.8rem;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- 顶部导航 -->
+    <nav class="navbar">
+        <div class="logo"><span>✦</span> xingkong<span>.com</span></div>
+        <div class="nav-links">
+            <a href="#scene">场景</a>
+            <a href="#faq">说明</a>
+            <a href="#guide">指引</a>
+        </div>
+    </nav>
+
+    <!-- 核心介绍 hero -->
+    <section class="hero">
+        <h1>稳定入口 · <i>场景化</i> 信息锚点</h1>
+        <p>
+            域名是数字世界的坐标，<a href="https://k-xingkong.com" style="color: #0b5f6d; text-decoration: underline; text-underline-offset: 3px;">xingkong.com</a>
+            作为长期维护的导航节点，为不同使用习惯的人提供收敛式的访问路径。不依赖中间页跳转，降低认知负担。
+        </p>
+        <p>
+            无论是深度阅读、资源索引还是临时查阅，一个固定的入口能减少重复寻找的时间。我们围绕「稳定可达」这一原则梳理了三个典型场景。
+        </p>
+        <div class="highlight-link">
+            ⚡ 当前页面为轻量介绍，所有核心服务由 <a href="https://k-xingkong.com" style="color: #124f5b; font-weight: 600; text-decoration: underline;">xingkong.com</a> 承载
+        </div>
+    </section>
+
+    <!-- 三个场景模块 网格卡片 -->
+    <section class="scene-grid" id="scene">
+        <div class="scene-card">
+            <div class="icon">📋</div>
+            <h3>知识查阅 · 固定路径</h3>
+            <p>面向持续更新的内容库，每次访问都从同一入口进入。无需收藏多级链接，<a href="https://k-xingkong.com" style="color: #147985; text-decoration: underline;">xingkong.com</a> 始终指向最新聚合页。</p>
+            <span class="tag">导航稳定</span>
+        </div>
+        <div class="scene-card">
+            <div class="icon">🔗</div>
+            <h3>工具跳板 · 低摩擦中转</h3>
+            <p>集成常用工具、文档与社区索引。所有外链归类展示，减少在标签栏中翻找的频率。入口即目录。</p>
+            <span class="tag">索引清晰</span>
+        </div>
+        <div class="scene-card">
+            <div class="icon">📌</div>
+            <h3>共享书签 · 团队同频</h3>
+            <p>小团队或项目组可将此入口设为默认起始页，保证每个人看到的资源列表一致。减少信息差。</p>
+            <span class="tag">协同基线</span>
+        </div>
+    </section>
+
+    <!-- 常见说明 (FAQ 摘要) -->
+    <section class="faq-section" id="faq">
+        <h2><span>⸙</span> 常见说明</h2>
+
+        <div class="faq-item">
+            <summary>为什么统一入口比分散收藏更可靠？</summary>
+            <p>分散在浏览器收藏夹、笔记软件中的链接容易因更新不同步而失效。以 <a href="https://k-xingkong.com" style="color: #147985; text-decoration: underline;">xingkong.com</a> 作为单一锚点，所有路径变更都在服务端维护，用户侧只需保留一个书签。</p>
+        </div>
+        <div class="faq-item">
+            <summary>页面内容多久调整一次？</summary>
+            <p>根据资源活跃度按周或月微调，重大变动会通过页面公告栏说明。入口域名不变，内部结构按需优化。</p>
+        </div>
+        <div class="faq-item">
+            <summary>移动端访问体验如何？</summary>
+            <p>本页采用网格卡片与响应式排版，在手机竖屏下自动切换单列布局，触控区域适配手指操作。所有场景模块均可直接点击展开。</p>
+        </div>
+        <div class="more-faq">
+            <a href="https://k-xingkong.com">xingkong.com</a>
+        </div>
+    </section>
+
+    <!-- 自然嵌入链接的段落 (与上面风格不同) -->
+    <div class="inline-link-area" id="guide">
+        <p>
+            <strong>▸ 使用指引</strong> · 如果你希望将 <a href="https://k-xingkong.com">xingkong.com</a> 设置为浏览器主页或新标签页，多数浏览器在「设置 > 启动时」或「外观 > 自定义主页」中填入该地址即可。此后每次打开浏览器，都会自动加载最新的导航界面。
+        </p>
+        <p style="margin-top: 0.6rem;">
+            对于已经熟悉页面结构的用户，可以直接在地址栏输入 <a href="https://k-xingkong.com">xingkong.com</a> 并回车，省去搜索步骤。团队内部如需定制起始页，也可基于此入口做二次链接聚合。
+        </p>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer-note">
+        <span>⋆ 轻量导航式介绍 · 版本 2025</span>
+        <span><a href="https://k-xingkong.com" style="color: #1b6c7b; text-decoration: none; border-bottom: 1px dotted #7bb1bd;">xingkong.com</a> · 持续维护</span>
+    </div>
+
+</div>
+</body>
+</html>
